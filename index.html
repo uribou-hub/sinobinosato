@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>少年サッカー30周年記念大会 - 忍の極意</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Noto Sans JP for Japanese text, Inter for general -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif; /* 日本語優先 */
+            background-color: #0a0a0a; /* 非常に暗い黒 */
+            color: #f0f0f0; /* 明るいテキスト色 */
+            /* 忍びの里をイメージした背景テクスチャ（竹林と隠れた屋根のシルエット） */
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%230a0a0a'/%3E%3Cpath d='M0 100 L50 50 L100 100 L150 50 L200 100' stroke='%231a1a1a' stroke-width='1.5' opacity='0.2'/%3E%3Cpath d='M0 150 L50 100 L100 150 L150 100 L200 150' stroke='%231a1a1a' stroke-width='1.5' opacity='0.2'/%3E%3Ccircle cx='25' cy='125' r='3' fill='%23FFD700' opacity='0.05'/%3E%3Ccircle cx='75' cy='75' r='3' fill='%23FFD700' opacity='0.05'/%3E%3Ccircle cx='125' cy='125' r='3' fill='%23FFD700' opacity='0.05'/%3E%3Ccircle cx='175' cy='75' r='3' fill='%23FFD700' opacity='0.05'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px; /* パターンのサイズ調整 */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .section-title {
+            font-size: 3rem; /* さらに大きく */
+            font-weight: 800;
+            color: #FFD700; /* 鮮やかな黄色 */
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* より強い影 */
+            letter-spacing: 0.05em;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 120px; /* より長く */
+            height: 6px; /* より太く */
+            background-color: #FFD700; /* 黄色の下線 */
+            border-radius: 9999px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); /* 黄色の光彩 */
+        }
+        .card {
+            background-color: #1a1a1a; /* 暗いカード背景 */
+            border-radius: 1.25rem; /* 適度な丸み */
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 2px solid #333333; /* 濃いグレーの枠線 */
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.6), 0 15px 15px -5px rgba(0, 0, 0, 0.3);
+            border-color: #FFD700; /* ホバーで黄色に */
+        }
+        .btn-primary {
+            background-color: #FFD700; /* 鮮やかな黄色 */
+            color: #1a1a1a; /* 暗いテキスト */
+            padding: 1rem 2.5rem;
+            border-radius: 1rem; /* ボタンの丸み */
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); /* 黄色の光彩 */
+            text-transform: uppercase; /* 大文字 */
+        }
+        .btn-primary:hover {
+            background-color: #e6c200; /* 少し暗い黄色 */
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
+        }
+        .hero-section {
+            background: linear-gradient(to bottom right, #1a1a1a, #0a0a0a); /* 暗いグラデーション */
+            color: white;
+            padding: 6rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 5rem;
+            border-bottom-right-radius: 5rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+        .hero-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 忍者の手裏剣パターン */
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0L61.8 38.2L100 50L61.8 61.8L50 100L38.2 61.8L0 50L38.2 38.2L50 0Z' fill='%23FFD700' opacity='0.05'/%3E%3C/svg%3E");
+            background-size: 150px; /* パターンのサイズ調整 */
+            background-repeat: repeat;
+            opacity: 0.1; /* 非常に薄く */
+            z-index: 0;
+        }
+        .match-result-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 1rem; /* 行間のスペース */
+        }
+        .match-result-table th, .match-result-table td {
+            padding: 1.25rem;
+            text-align: center;
+            background-color: #1a1a1a; /* カード背景色 */
+            color: #f0f0f0;
+            border: 1px solid #333333;
+        }
+        .match-result-table th {
+            background-color: #333333; /* ヘッダー背景 */
+            font-weight: 800;
+            color: #FFD700; /* 黄色 */
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            border-bottom: 3px solid #FFD700; /* 黄色の下線 */
+        }
+        .match-result-table tr:first-child th:first-child { border-top-left-radius: 1.25rem; }
+        .match-result-table tr:first-child th:last-child { border-top-right-radius: 1.25rem; }
+        .match-result-table tbody tr {
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+        .match-result-table tbody tr:hover {
+            background-color: #333333; /* ホバーで強調 */
+            border-color: #FFD700; /* ホバーで黄色に */
+        }
+        /* Ninja Star SVG Icon */
+        .ninja-star-icon {
+            width: 60px;
+            height: 60px;
+            fill: #FFD700; /* 黄色 */
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); /* 光彩 */
+        }
+        /* Scroll Animation Styles */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll Icon (Scroll Down Hint) */
+        .scroll-icon {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 1.5s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-15px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-7px) translateX(-50%);
+            }
+        }
+        .scroll-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: #FFD700;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gray-950 shadow-2xl py-5">
+        <div class="container flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                <!-- Ninja Star Logo SVG -->
+                <svg class="ninja-star-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 0L61.8 38.2L100 50L61.8 61.8L50 100L38.2 61.8L0 50L38.2 38.2L50 0Z" />
+                </svg>
+                <h1 class="text-4xl font-extrabold text-yellow-400 drop-shadow-lg">少年サッカー30周年記念大会</h1>
+            </div>
+            <nav>
+                <ul class="flex flex-wrap justify-center space-x-8 text-xl font-bold">
+                    <li><a href="#about" class="text-gray-300 hover:text-yellow-400 transition duration-300">大会概要</a></li>
+                    <li><a href="#details" class="text-gray-300 hover:text-yellow-400 transition duration-300">開催情報</a></li>
+                    <li><a href="#schedule" class="text-gray-300 hover:text-yellow-400 transition duration-300">試合日程</a></li>
+                    <li><a href="#results" class="text-gray-300 hover:text-yellow-400 transition duration-300">試合結果</a></li>
+                    <li><a href="#rules" class="text-gray-300 hover:text-yellow-400 transition duration-300">大会ルール</a></li>
+                    <li><a href="#map" class="text-gray-300 hover:text-yellow-400 transition duration-300">会場マップ</a></li>
+                    <li><a href="#teams" class="text-gray-300 hover:text-yellow-400 transition duration-300">参加チーム</a></li>
+                    <li><a href="#sponsors" class="text-gray-300 hover:text-yellow-400 transition duration-300">スポンサー</a></li>
+                    <li><a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section relative">
+        <div class="hero-image-container"></div>
+        <div class="relative z-10 py-24">
+            <h2 class="text-6xl md:text-7xl font-extrabold mb-8 leading-tight drop-shadow-xl text-yellow-300">
+                30年の極意、未来を切り開くキックオフ！
+            </h2>
+            <p class="text-2xl md:text-3xl mb-10 opacity-90 drop-shadow-lg text-gray-200">
+                少年サッカーの情熱を育み30年。記念大会で新たな伝説を刻む！
+            </p>
+            <a href="#details" class="btn-primary text-2xl px-10 py-5">
+                大会詳細を見る
+            </a>
+            <div class="scroll-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 16.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z"></path></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">大会概要</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="card p-8">
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        この記念大会は、地域の少年サッカーの発展に貢献してきた30年間の歴史を祝うものです。多くの子供たちがサッカーを通じて友情を育み、成長する場を提供してきました。今年の大会は、これまでの感謝と、未来への希望を込めて開催されます。
+                        過去の卒業生や地域の方々にもご参加いただき、盛大にお祝いできれば幸いです。
+                    </p>
+                </div>
+                <div class="card p-8">
+                    <!-- Ninja Footsteps SVG Icon -->
+                    <div class="flex items-center justify-center h-full">
+                        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="opacity-70">
+                            <path d="M50 100 L70 120 L100 100 L120 120 L150 100" stroke="#FFD700" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 5px rgba(255, 215, 0, 0.5))"/>
+                            <path d="M60 110 L80 130 L110 110 L130 130 L160 110" stroke="#FFD700" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" filter="drop-shadow(0 0 5px rgba(255, 215, 0, 0.5))"/>
+                            <path d="M70 120 L90 140 L120 120 L140 140 L170 120" stroke="#FFD700" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" filter="drop-shadow(0 0 5px rgba(255, 215, 0, 0.5))"/>
+                            <circle cx="50" cy="100" r="5" fill="#FFD700"/>
+                            <circle cx="100" cy="100" r="5" fill="#FFD700"/>
+                            <circle cx="150" cy="100" r="5" fill="#FFD700"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Section -->
+    <section id="details" class="py-20 bg-gray-950 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">開催情報</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-8 text-center">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4">開催日</h3>
+                    <p class="text-xl text-gray-200">2025年11月23日(土)・24日(日)</p>
+                    <p class="text-gray-400">午前9時〜午後5時</p>
+                </div>
+                <div class="card p-8 text-center">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4">開催場所</h3>
+                    <p class="text-xl text-gray-200">〇〇市立総合運動公園 サッカー場</p>
+                    <p class="text-gray-400">（詳細なアクセス情報は後日公開）</p>
+                </div>
+                <div class="card p-8 text-center">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4">参加カテゴリー</h3>
+                    <ul class="list-disc list-inside text-xl text-gray-200 mx-auto w-fit text-left">
+                        <li>U-8 (小学2年生以下)</li>
+                        <li>U-10 (小学4年生以下)</li>
+                        <li>U-12 (小学6年生以下)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section (Placeholder) -->
+    <section id="schedule" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">試合日程</h2>
+            <div class="card p-8 text-center">
+                <p class="text-lg text-gray-300 mb-6">
+                    試合日程と組み合わせは、参加チーム決定後、改めて公開いたします。
+                    <br>最新情報は当ウェブサイトにてご確認ください。
+                </p>
+                <!-- 巻物 (Scroll) SVG Icon -->
+                <div class="flex items-center justify-center mt-8">
+                    <svg width="600" height="300" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Scroll Body -->
+                        <rect x="50" y="50" width="500" height="200" rx="10" fill="#222222" stroke="#FFD700" stroke-width="3" filter="drop-shadow(0 0 10px rgba(255, 215, 0, 0.4))"/>
+                        <!-- Left Roll -->
+                        <path d="M50 50 C20 75, 20 225, 50 250 L50 50 Z" fill="#333333" stroke="#FFD700" stroke-width="3"/>
+                        <!-- Right Roll -->
+                        <path d="M550 50 C580 75, 580 225, 550 250 L550 50 Z" fill="#333333" stroke="#FFD700" stroke-width="3"/>
+                        <!-- Text Placeholder -->
+                        <text x="300" y="150" font-family="'Noto Sans JP', sans-serif" font-size="30" fill="#FFD700" text-anchor="middle" font-weight="bold">
+                            試合日程
+                        </text>
+                        <text x="300" y="190" font-family="'Noto Sans JP', sans-serif" font-size="20" fill="#f0f0f0" text-anchor="middle">
+                            近日公開！
+                        </text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Match Results Section -->
+    <section id="results" class="py-20 bg-gray-950 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">試合結果</h2>
+            <div class="card p-8">
+                <p class="text-lg text-gray-300 mb-8 text-center">
+                    熱戦の記録！各試合の結果をこちらで確認できます。
+                </p>
+                <!-- Team Filter -->
+                <div class="mb-6 text-center">
+                    <label for="team-filter" class="text-yellow-400 font-bold text-lg mr-4">チームごとに絞り込む:</label>
+                    <select id="team-filter" class="bg-gray-800 text-gray-200 p-2 rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        <option value="all">全て</option>
+                        <!-- Team options will be dynamically inserted here by JavaScript -->
+                    </select>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="match-result-table" id="match-results-table">
+                        <thead>
+                            <tr>
+                                <th>日付</th>
+                                <th>時間</th>
+                                <th>チームA</th>
+                                <th>スコア</th>
+                                <th>チームB</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Sample Match Results - data-team-a and data-team-b attributes are used for filtering -->
+                            <tr data-team-a="風の里FC" data-team-b="影の谷SC">
+                                <td>11/23(土)</td>
+                                <td>10:00</td>
+                                <td>風の里FC</td>
+                                <td>3 - 1</td>
+                                <td>影の谷SC</td>
+                            </tr>
+                            <tr data-team-a="炎の蹴球団" data-team-b="水の流星FC">
+                                <td>11/23(土)</td>
+                                <td>11:30</td>
+                                <td>炎の蹴球団</td>
+                                <td>2 - 2</td>
+                                <td>水の流星FC</td>
+                            </tr>
+                            <tr data-team-a="雷鳴イレブン" data-team-b="土の砦FC">
+                                <td>11/23(土)</td>
+                                <td>13:00</td>
+                                <td>雷鳴イレブン</td>
+                                <td>4 - 0</td>
+                                <td>土の砦FC</td>
+                            </tr>
+                            <tr data-team-a="影の谷SC" data-team-b="森の木葉SC">
+                                <td>11/24(日)</td>
+                                <td>10:00</td>
+                                <td>影の谷SC</td>
+                                <td>0 - 2</td>
+                                <td>森の木葉SC</td>
+                            </tr>
+                            <tr data-team-a="水の流星FC" data-team-b="山の獣FC">
+                                <td>11/24(日)</td>
+                                <td>11:30</td>
+                                <td>水の流星FC</td>
+                                <td>1 - 3</td>
+                                <td>山の獣FC</td>
+                            </tr>
+                            <tr data-team-a="風の里FC" data-team-b="雷鳴イレブン">
+                                <td>11/24(日)</td>
+                                <td>14:00</td>
+                                <td>風の里FC</td>
+                                <td>2 - 1</td>
+                                <td>雷鳴イレブン</td>
+                            </tr>
+                            <!-- Add more results as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tournament Rules Section -->
+    <section id="rules" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">大会ルール</h2>
+            <div class="card p-8">
+                <p class="text-lg text-gray-300 mb-6">
+                    本大会は、フェアプレー精神に基づき、以下のルールで実施されます。
+                </p>
+                <ul class="list-disc list-inside text-lg text-gray-300 space-y-3">
+                    <li>各カテゴリーの試合時間は、予選リーグ15分ハーフ（休憩5分）、決勝トーナメント20分ハーフ（休憩5分）とします。</li>
+                    <li>選手交代は自由な交代制とします。</li>
+                    <li>リーグ戦の順位は、勝ち点（勝3、分1、負0）、得失点差、総得点、直接対決の結果、抽選の順で決定します。</li>
+                    <li>決勝トーナメントで同点の場合は、PK戦（3人制）で勝敗を決定します。</li>
+                    <li>審判は、各チームから1名ずつ出していただく相互審判制とします。</li>
+                    <li>その他、詳細なルールは大会当日配布される大会要項をご確認ください。</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Map Section -->
+    <section id="map" class="py-20 bg-gray-950 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">会場マップ</h2>
+            <div class="card p-8 text-center">
+                <p class="text-lg text-gray-300 mb-6">
+                    大会会場である〇〇市立総合運動公園 サッカー場のマップです。
+                    <br>駐車場や各コートの位置をご確認いただけます。
+                </p>
+                <!-- Placeholder for Google Maps Embed -->
+                <div class="relative w-full overflow-hidden rounded-xl shadow-lg border-2 border-gray-700" style="padding-top: 56.25%;">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3278.966453181816!2d136.10427021522858!3d34.69894778044706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6001712a2a2a2a2a%3A0x6001712a2a2a2a2a!2s%E3%81%8A%E3%81%8A%E5%B8%82%E7%AB%8B%E7%B7%8F%E5%90%88%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4!5e0!3m2!1sja!2sjp!4v1678901234567!5m2!1sja!2sjp"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="absolute top-0 left-0 w-full h-full"
+                    ></iframe>
+                </div>
+                <p class="text-gray-400 mt-4">
+                    ※上記は仮の地図です。正確な位置は大会要項をご確認ください。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teams Section (Placeholder) -->
+    <section id="teams" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">参加チーム</h2>
+            <div class="card p-8 text-center">
+                <p class="text-lg text-gray-300 mb-6">
+                    本大会に参加するチームは以下の通りです。
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mt-10" id="participating-teams-list">
+                    <!-- Placeholder for team logos -->
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="風の里FC">風の里FC</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="影の谷SC">影の谷SC</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="炎の蹴球団">炎の蹴球団</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="水の流星FC">水の流星FC</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="雷鳴イレブン">雷鳴イレブン</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="土の砦FC">土の砦FC</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="森の木葉SC">森の木葉SC</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl" data-team-name="山の獣FC">山の獣FC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors Section (Placeholder) -->
+    <section id="sponsors" class="py-20 bg-gray-950 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">スポンサー</h2>
+            <div class="card p-8 text-center">
+                <p class="text-lg text-gray-300 mb-6">
+                    本大会は、多くの企業様にご支援いただいております。心より感謝申し上げます。
+                    <br>スポンサー企業様の一覧は後日公開いたします。
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mt-10">
+                    <!-- Placeholder for sponsor logos -->
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl">忍術道具店</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl">手裏剣工房</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl">秘伝の巻物出版社</span>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg flex items-center justify-center h-28 shadow-md border-2 border-gray-700">
+                        <span class="text-yellow-400 font-bold text-xl">隠れ里温泉</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900 fade-in-section">
+        <div class="container">
+            <h2 class="section-title">お問い合わせ</h2>
+            <div class="card p-8 text-center">
+                <p class="text-lg text-gray-300 mb-6">
+                    大会に関するご質問やお問い合わせは、下記までご連絡ください。
+                </p>
+                <p class="text-2xl font-bold text-yellow-400 mb-3">
+                    メール: info@example.com
+                </p>
+                <p class="text-2xl font-bold text-yellow-400">
+                    電話: 00-1234-5678
+                </p>
+                <p class="text-gray-400 mt-6">
+                    （受付時間：平日9:00〜17:00）
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-950 text-white py-10 mt-16 rounded-t-3xl">
+        <div class="container text-center">
+            <p class="text-lg mb-6 text-gray-400">&copy; 2025 少年サッカー30周年記念大会実行委員会. All Rights Reserved.</p>
+            <div class="flex justify-center space-x-8">
+                <a href="#" class="text-gray-500 hover:text-yellow-400 transition duration-300 text-lg">プライバシーポリシー</a>
+                <a href="#" class="text-gray-500 hover:text-yellow-400 transition duration-300 text-lg">サイトマップ</a>
+                <!-- Social Media Icons Placeholder (Ninja-themed) -->
+                <a href="#" class="text-gray-500 hover:text-yellow-400 transition duration-300">
+                    <!-- Example: Simple Twitter icon -->
+                    <svg class="w-7 h-7 inline-block" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.09 4.09 0 01.8 10.07c-.004.043-.004.086-.004.129A11.65 11.65 0 0010.392 22.1c-1.979 0-3.83-.558-5.39-1.516a4.103 4.103 0 001.27 5.477c.48.384.978.72 1.494 1.002-.676.21-1.372.322-2.09.322-.276 0-.54-.014-.803-.04A11.65 11.65 0 008.29 20.251z" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-yellow-400 transition duration-300">
+                    <!-- Example: Simple GitHub icon -->
+                    <svg class="w-7 h-7 inline-block" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.163 6.839 9.489.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.455-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.004.07 1.532 1.03 1.532 1.03.89 1.529 2.341 1.088 2.91.831.091-.645.35-1.088.636-1.339-2.22-.253-4.555-1.11-4.555-4.949 0-1.095.39-1.99 1.029-2.693-.103-.253-.447-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.701.114 2.502.336 1.909-1.295 2.747-1.025 2.747-1.025.546 1.378.202 2.397.099 2.65.64.703 1.029 1.598 1.029 2.693 0 3.84-2.339 4.69-4.566 4.943.359.309.678.92.678 1.855 0 1.339-.012 2.419-.012 2.747 0 .268.18.579.688.482A10 10 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for interactive elements and animations
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. Match Results Filtering by Team ---
+            const teamFilter = document.getElementById('team-filter');
+            const matchResultsTable = document.getElementById('match-results-table');
+            const tableRows = matchResultsTable.querySelectorAll('tbody tr');
+            const participatingTeamsList = document.getElementById('participating-teams-list');
+
+            // Populate team filter dropdown
+            if (teamFilter && participatingTeamsList) {
+                const teamNames = new Set(); // Use a Set to store unique team names
+                participatingTeamsList.querySelectorAll('[data-team-name]').forEach(teamSpan => {
+                    teamNames.add(teamSpan.dataset.teamName);
+                });
+
+                // Add team names from match results as well, in case they are not in the participating teams list
+                tableRows.forEach(row => {
+                    if (row.dataset.teamA) teamNames.add(row.dataset.teamA);
+                    if (row.dataset.teamB) teamNames.add(row.dataset.teamB);
+                });
+
+                teamNames.forEach(teamName => {
+                    const option = document.createElement('option');
+                    option.value = teamName;
+                    option.textContent = teamName;
+                    teamFilter.appendChild(option);
+                });
+
+                teamFilter.addEventListener('change', (event) => {
+                    const selectedTeam = event.target.value;
+
+                    tableRows.forEach(row => {
+                        const teamA = row.dataset.teamA;
+                        const teamB = row.dataset.teamB;
+
+                        if (selectedTeam === 'all' || teamA === selectedTeam || teamB === selectedTeam) {
+                            row.style.display = ''; // Show the row
+                        } else {
+                            row.style.display = 'none'; // Hide the row
+                        }
+                    });
+                });
+            }
+
+            // --- 2. Scroll Animations (Fade-in-section) ---
+            const fadeInSections = document.querySelectorAll('.fade-in-section');
+
+            // Options for the Intersection Observer
+            const observerOptions = {
+                root: null, // Use the viewport as the root
+                rootMargin: '0px',
+                threshold: 0.1 // When 10% of the element is visible
+            };
+
+            // Callback function for the Intersection Observer
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // If the element is visible, add the 'is-visible' class
+                        entry.target.classList.add('is-visible');
+                        // Stop observing once it's visible to prevent re-triggering
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            // Create a new Intersection Observer instance
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            // Observe each fade-in-section
+            fadeInSections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- 3. Smooth Scrolling for Navigation ---
+            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault(); // Prevent default anchor click behavior
+
+                    const targetId = this.getAttribute('href'); // Get the target section ID
+                    const targetElement = document.querySelector(targetId); // Get the target element
+
+                    if (targetElement) {
+                        // Scroll to the target element smoothly
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
